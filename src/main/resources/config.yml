@@ -2,11 +2,7 @@
 #       DoubleDoors       #
 ###########################
 
-# When set to true, DoubleDoors will detect mechanics created by other plugins, e.g. allowing iron doors to be opened via hand.
-check-for-other-plugins: true
-
-# Do not open the other door if another plugins cancels the original interaction
-check-for-protection-plugins: true
+# written by mfnalex / JEFF Media GbR
 
 # Also open both doors when one door gets powered by redstone.
 # Note: if both doors are powered and only signal gets cut, only one door will close (like in vanilla)

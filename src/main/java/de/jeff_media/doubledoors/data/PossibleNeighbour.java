@@ -16,9 +16,11 @@ public class PossibleNeighbour {
         this.facing = facing;
     }
 
-    public BlockFace getFacing() {
-        return facing;
-    }
+// --Commented out by Inspection START (25.04.2021 20:54):
+//    public BlockFace getFacing() {
+//        return facing;
+//    }
+// --Commented out by Inspection STOP (25.04.2021 20:54)
 
     public Door.Hinge getHinge() {
         return hinge;

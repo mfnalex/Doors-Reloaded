@@ -7,7 +7,6 @@ import de.jeff_media.doubledoors.listeners.DoorListener;
 import de.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.updatechecker.UserAgentBuilder;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
@@ -35,6 +34,20 @@ public class Main extends JavaPlugin {
 
             new PossibleNeighbour(0, -1, Door.Hinge.LEFT, BlockFace.WEST),
             new PossibleNeighbour(0, -1, Door.Hinge.RIGHT, BlockFace.EAST)
+/*            new PossibleNeighbour(-1, 0, Door.Hinge.RIGHT, BlockFace.SOUTH),
+            new PossibleNeighbour(-1, 0, Door.Hinge.LEFT, BlockFace.NORTH),
+
+
+            new PossibleNeighbour(+1, 0, Door.Hinge.LEFT, BlockFace.SOUTH),
+            new PossibleNeighbour(+1, 0, Door.Hinge.RIGHT, BlockFace.NORTH),
+
+
+            new PossibleNeighbour(0, +1, Door.Hinge.RIGHT, BlockFace.WEST),
+            new PossibleNeighbour(0, +1, Door.Hinge.LEFT, BlockFace.EAST),
+
+
+            new PossibleNeighbour(0, -1, Door.Hinge.LEFT, BlockFace.WEST),
+            new PossibleNeighbour(0, -1, Door.Hinge.RIGHT, BlockFace.EAST)*/
     };
     private boolean redstoneEnabled = false;
 
@@ -139,37 +152,32 @@ public class Main extends JavaPlugin {
         otherDoorBlock.setBlockData(otherDoor);
     }
 
-    public void toggleOtherDoor(Block doorBlock, Door door, Block otherDoorBlock, Door otherDoor, boolean open, boolean causedByRedstone) {
+    public void toggleOtherDoor(Block block, Block otherBlock, boolean open, boolean causedByRedstone) {
+
+        if (!(block.getBlockData() instanceof Door)) return;
+        if (!(otherBlock.getBlockData() instanceof Door)) return;
+
+        Door door = (Door) block.getBlockData();
+        Door otherDoor = (Door) otherBlock.getBlockData();
 
         if (causedByRedstone) {
-            toggleDoor(otherDoorBlock, otherDoor, open);
+            toggleDoor(otherBlock, otherDoor, open);
             return;
         }
 
-        if (getConfig().getBoolean(Config.CHECK_OTHER_PLUGINS)) {
-
-            boolean openNow = door.isOpen();
-            debug("Open now: " + openNow);
-            new BukkitRunnable() {
-                @Override
+        boolean openNow = door.isOpen();
+        new BukkitRunnable() {
+            @Override
                 public void run() {
-                    if(!(otherDoorBlock.getBlockData() instanceof Door)) return;
-                    Door newDoor = (Door) doorBlock.getBlockData();
-                    debug("Open 1 tick later: " + newDoor.isOpen());
-                    if (newDoor.isOpen() == openNow) {
-                        debug("Check other plugins -> cancelled");
-                        return;
-                    }
-                    debug("Check other plugins -> success");
-                    toggleDoor(otherDoorBlock, otherDoor, open);
+                if (!(otherBlock.getBlockData() instanceof Door)) return;
+                Door newDoor = (Door) block.getBlockData();
+                if (newDoor.isOpen() == openNow) {
+                    return;
                 }
-            }.runTaskLater(this, 1L);
-        } else {
-            if (door.getMaterial() == Material.IRON_DOOR) {
-                return;
+                toggleDoor(otherBlock, otherDoor, open);
             }
-            toggleDoor(otherDoorBlock, otherDoor, open);
-        }
+            }.runTaskLater(this, 1L);
+
     }
 
 }

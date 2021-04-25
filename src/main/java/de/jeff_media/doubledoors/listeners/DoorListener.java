@@ -1,7 +1,7 @@
 package de.jeff_media.doubledoors.listeners;
 
 import de.jeff_media.doubledoors.Main;
-import de.jeff_media.doubledoors.config.Config;
+import de.jeff_media.doubledoors.config.Permissions;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
@@ -41,16 +41,14 @@ public class DoorListener implements Listener {
 
         if (otherDoorBlock.getBlockPower() > 0) return;
 
-        main.toggleOtherDoor(door, otherDoorBlock, (Door) otherDoorBlock.getBlockData(), event.getNewCurrent() > 0, true);
+        main.toggleOtherDoor(block, otherDoorBlock, event.getNewCurrent() > 0, true);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onRightClickDoor(PlayerInteractEvent event) {
 
-        if (main.getConfig().getBoolean(Config.CHECK_FOR_PROTECTION_PLUGINS)) {
-            if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
-        }
-
+        if(!event.getPlayer().hasPermission(Permissions.USE)) return;
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
         Block clickedBlock = event.getClickedBlock();
@@ -69,6 +67,6 @@ public class DoorListener implements Listener {
 
         Door otherDoor = (Door) otherDoorBlock.getBlockData();
 
-        main.toggleOtherDoor(door, otherDoorBlock, otherDoor, !otherDoor.isOpen(), false);
+        main.toggleOtherDoor(clickedBlock, otherDoorBlock, !otherDoor.isOpen(), false);
     }
 }
