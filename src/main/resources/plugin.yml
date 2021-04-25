@@ -1,0 +1,23 @@
+main: ${spigot.main}
+name: ${project.name}
+version: ${project.version}
+description: "${project.description}"
+prefix: ${spigot.prefix}
+api-version: "1.13"
+authors:
+  - mfnalex
+  - JEFF Media GbR
+database: false
+load: POSTWORLD
+commands:
+  doubledoors:
+    description: Reloads the configuration
+    permission: doubledoors.reload
+    usage: /<command>
+permissions:
+  doubledoors.use:
+    description: Allows to open double doors with one click
+    default: true
+  doubledoors.reload:
+    description: Allows to reload the config using /doubledoors
+    default: op

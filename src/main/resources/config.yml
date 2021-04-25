@@ -1,0 +1,31 @@
+###########################
+#       DoubleDoors       #
+###########################
+
+# When set to true, DoubleDoors will detect mechanics created by other plugins, e.g. allowing iron doors to be opened via hand.
+check-for-other-plugins: true
+
+# Do not open the other door if another plugins cancels the original interaction
+check-for-protection-plugins: true
+
+# Also open both doors when one door gets powered by redstone.
+# Note: if both doors are powered and only signal gets cut, only one door will close (like in vanilla)
+check-for-redstone: true
+
+# Should we check for updates?
+# When enabled, a message is printed in the console if a new version has
+# been found, and OPs will be notified when they join the server.
+# When set to true, we will check for updates on startup and every X hours
+# When set to on-startup, we will only check on startup
+# When set to false, don't check for updates
+check-for-updates: true
+
+# When check-for-updates is true, AngelChest will check every X hours
+check-interval: 4
+
+# Debug mode
+debug: false
+
+# NEVER CHANGE THE VALUES BELOW!
+plugin-version: ${project.version}
+config-version: ${config.version}
