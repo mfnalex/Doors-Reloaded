@@ -1,6 +1,7 @@
 package de.jeff_media.doorsreloaded.config;
 
 import de.jeff_media.doorsreloaded.Main;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Config {
@@ -17,11 +18,14 @@ public class Config {
     public static final String ALLOW_AUTOCLOSE = "allow-autoclose";
     public static final String KNOCKING_REQUIRES_SHIFT = "knocking-requires-shift";
     public static final String AUTOCLOSE_DELAY = "autoclose-delay";
+    public static final String KNOCKING_REQUIRES_EMPTY_HAND = "knocking-requires-empty-hand";
     public static final String DEBUG = "debug";
 
+    private static Metrics metrics;
+
     public static void init() {
-        //Main main = Main.getInstance();
-        FileConfiguration conf = Main.getInstance().getConfig();
+        Main main = Main.getInstance();
+        FileConfiguration conf = main.getConfig();
         conf.addDefault(CHECK_FOR_UPDATES, "true");
         conf.addDefault(CHECK_FOR_UPDATES_INTERVAL, 4);
         conf.addDefault(CHECK_FOR_REDSTONE, true);
@@ -31,9 +35,12 @@ public class Config {
         conf.addDefault(SOUND_KNOCK_VOLUME, 1.0);
         conf.addDefault(SOUND_KNOCK_PITCH, 1.0);
         conf.addDefault(ALLOW_KNOCKING, true);
+        conf.addDefault(KNOCKING_REQUIRES_EMPTY_HAND, false);
         conf.addDefault(ALLOW_AUTOCLOSE, false);
         conf.addDefault(KNOCKING_REQUIRES_SHIFT, false);
         conf.addDefault(AUTOCLOSE_DELAY, 5.0);
         conf.addDefault(DEBUG, false);
+
+        metrics = new Metrics(main,11153);
     }
 }

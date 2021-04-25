@@ -4,9 +4,12 @@ import de.jeff_media.doorsreloaded.Main;
 import de.jeff_media.doorsreloaded.config.Config;
 import de.jeff_media.doorsreloaded.config.Permissions;
 import de.jeff_media.doorsreloaded.utils.SoundUtils;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,6 +18,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 public class DoorListener implements Listener {
 
@@ -74,11 +78,18 @@ public class DoorListener implements Listener {
 
     @EventHandler
     public void onDoorKnock(PlayerInteractEvent event) {
-        if(!event.getPlayer().hasPermission(Permissions.KNOCK)) return;
+        Player player = event.getPlayer();
+        GameMode gameMode = player.getGameMode();
+        if(gameMode == GameMode.CREATIVE || gameMode == GameMode.SPECTATOR) return;
+        if(!player.hasPermission(Permissions.KNOCK)) return;
         if(!main.getConfig().getBoolean(Config.ALLOW_KNOCKING)) return;
         if(event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if(event.getHand() != EquipmentSlot.HAND) return;
-        if(main.getConfig().getBoolean(Config.KNOCKING_REQUIRES_SHIFT) && !event.getPlayer().isSneaking()) return;
+        if(main.getConfig().getBoolean(Config.KNOCKING_REQUIRES_SHIFT) && !player.isSneaking()) return;
+        if(main.getConfig().getBoolean(Config.KNOCKING_REQUIRES_EMPTY_HAND)) {
+            ItemStack itemInHand = player.getInventory().getItemInMainHand();
+            if(itemInHand != null || itemInHand.getType() != Material.AIR) return;
+        }
         Block block = event.getClickedBlock();
         if(block == null) return;
         if(!(block.getBlockData() instanceof Door)) return;

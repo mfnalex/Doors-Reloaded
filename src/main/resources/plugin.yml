@@ -15,7 +15,7 @@ commands:
     permission: doorsreloaded.reload
     usage: /<command>
 permissions:
-  doorsreloaded.use:
+  doorsreloaded.doubledoors:
     description: Allows to open double doors with one click
     default: true
   doorsreloaded.reload:
