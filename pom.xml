@@ -6,7 +6,7 @@
     <groupId>de.jeff_media</groupId>
     <name>DoorsReloaded</name>
     <artifactId>DoorsReloaded</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <properties>
         <spigot.website>https://www.spigotmc.org/resources/authors/mfnalex.175238/</spigot.website>

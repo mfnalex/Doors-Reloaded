@@ -80,6 +80,8 @@ public class Main extends JavaPlugin {
     private void initUpdateChecker() {
         UpdateChecker.init(this, "https://api.jeff-media.de/doorsreloaded/latest-version.txt")
                 .setNotifyRequesters(true)
+                .setDownloadLink(91722)
+                .setChangelogLink(91722)
                 .setUserAgent(UserAgentBuilder.getDefaultUserAgent())
                 .setDonationLink("https://paypal.me/mfnalex");
 
