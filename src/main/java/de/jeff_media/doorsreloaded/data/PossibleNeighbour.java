@@ -1,4 +1,4 @@
-package de.jeff_media.doubledoors.data;
+package de.jeff_media.doorsreloaded.data;
 
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Door;
@@ -16,11 +16,9 @@ public class PossibleNeighbour {
         this.facing = facing;
     }
 
-// --Commented out by Inspection START (25.04.2021 20:54):
-//    public BlockFace getFacing() {
-//        return facing;
-//    }
-// --Commented out by Inspection STOP (25.04.2021 20:54)
+    public BlockFace getFacing() {
+        return facing;
+    }
 
     public Door.Hinge getHinge() {
         return hinge;

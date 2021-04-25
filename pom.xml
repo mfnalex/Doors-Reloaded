@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.jeff_media</groupId>
-    <name>DoubleDoors</name>
-    <artifactId>DoubleDoors</artifactId>
+    <name>DoorsReloaded</name>
+    <artifactId>DoorsReloaded</artifactId>
     <version>1.0.0</version>
 
     <properties>
         <spigot.website>https://www.spigotmc.org/resources/authors/mfnalex.175238/</spigot.website>
         <spigot.prefix>${project.name}</spigot.prefix>
-        <spigot.main>${project.groupId}.doubledoors.Main</spigot.main>
+        <spigot.main>${project.groupId}.doorsreloaded.Main</spigot.main>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -44,47 +44,47 @@
                     <relocations>
                         <relocation>
                             <pattern>de.jeff_media.jefflib</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.apache.maven.artifact</pattern>
-                            <shadedPattern>de.jeff_media.doubledoors.jefflib.thirdparty.org.apache.maven.artifact</shadedPattern>
+                            <shadedPattern>de.jeff_media.doorsreloaded.jefflib.thirdparty.org.apache.maven.artifact</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.jeff_media.updatechecker</pattern>
-                            <shadedPattern>de.jeff_media.doubledoors.updatechecker</shadedPattern>
+                            <shadedPattern>de.jeff_media.doorsreloaded.updatechecker</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.jeff_media.daddy</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>com.google.gson</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors.thirdparty.com.google.gson</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded.thirdparty.com.google.gson</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.apache.commons.lang3</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors.thirdparty.org.apache.commons.lang3</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded.thirdparty.org.apache.commons.lang3</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.intellij.lang.annotations</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors.thirdparty.org.intellij.lang.annotations</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded.thirdparty.org.intellij.lang.annotations</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.jetbrains.annotations</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors.thirdparty.org.jetbrains.annotations</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded.thirdparty.org.jetbrains.annotations</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.javatuples</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors.thirdparty.org.javatuples</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded.thirdparty.org.javatuples</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.zeroturnaround.zip</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors.thirdparty.org.zeroturnaround.zip</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded.thirdparty.org.zeroturnaround.zip</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats.bukkit</pattern>
-                            <shadedPattern>${project.groupId}.doubledoors</shadedPattern>
+                            <shadedPattern>${project.groupId}.doorsreloaded</shadedPattern>
                         </relocation>
                     </relocations>
                     <artifactSet>

@@ -1,7 +1,9 @@
-package de.jeff_media.doubledoors.listeners;
+package de.jeff_media.doorsreloaded.listeners;
 
-import de.jeff_media.doubledoors.Main;
-import de.jeff_media.doubledoors.config.Permissions;
+import de.jeff_media.doorsreloaded.Main;
+import de.jeff_media.doorsreloaded.config.Config;
+import de.jeff_media.doorsreloaded.config.Permissions;
+import de.jeff_media.doorsreloaded.utils.SoundUtils;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
@@ -68,5 +70,18 @@ public class DoorListener implements Listener {
         Door otherDoor = (Door) otherDoorBlock.getBlockData();
 
         main.toggleOtherDoor(clickedBlock, otherDoorBlock, !otherDoor.isOpen(), false);
+    }
+
+    @EventHandler
+    public void onDoorKnock(PlayerInteractEvent event) {
+        if(!event.getPlayer().hasPermission(Permissions.KNOCK)) return;
+        if(!main.getConfig().getBoolean(Config.ALLOW_KNOCKING)) return;
+        if(event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        if(event.getHand() != EquipmentSlot.HAND) return;
+        if(main.getConfig().getBoolean(Config.KNOCKING_REQUIRES_SHIFT) && !event.getPlayer().isSneaking()) return;
+        Block block = event.getClickedBlock();
+        if(block == null) return;
+        if(!(block.getBlockData() instanceof Door)) return;
+        SoundUtils.playKnockSound(block);
     }
 }

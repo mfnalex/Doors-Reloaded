@@ -1,9 +1,9 @@
-package de.jeff_media.doubledoors;
+package de.jeff_media.doorsreloaded;
 
-import de.jeff_media.doubledoors.commands.ReloadCommand;
-import de.jeff_media.doubledoors.config.Config;
-import de.jeff_media.doubledoors.data.PossibleNeighbour;
-import de.jeff_media.doubledoors.listeners.DoorListener;
+import de.jeff_media.doorsreloaded.commands.ReloadCommand;
+import de.jeff_media.doorsreloaded.config.Config;
+import de.jeff_media.doorsreloaded.data.PossibleNeighbour;
+import de.jeff_media.doorsreloaded.listeners.DoorListener;
 import de.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.updatechecker.UserAgentBuilder;
 import org.bukkit.Bukkit;
@@ -19,35 +19,17 @@ public class Main extends JavaPlugin {
 
     private static Main instance;
     private static final PossibleNeighbour[] possibleNeighbours = new PossibleNeighbour[] {
-            // North/South, West/East are interchangeable
-            new PossibleNeighbour(-1, 0, Door.Hinge.RIGHT, BlockFace.SOUTH),
-            new PossibleNeighbour(-1, 0, Door.Hinge.LEFT, BlockFace.NORTH),
+            new PossibleNeighbour(0, -1, Door.Hinge.RIGHT, BlockFace.EAST),
+            new PossibleNeighbour(0, 1, Door.Hinge.LEFT, BlockFace.EAST),
 
+            new PossibleNeighbour(1,0, Door.Hinge.RIGHT, BlockFace.SOUTH),
+            new PossibleNeighbour(-1,0, Door.Hinge.LEFT, BlockFace.SOUTH),
 
-            new PossibleNeighbour(+1, 0, Door.Hinge.LEFT, BlockFace.SOUTH),
-            new PossibleNeighbour(+1, 0, Door.Hinge.RIGHT, BlockFace.NORTH),
-
-
-            new PossibleNeighbour(0, +1, Door.Hinge.RIGHT, BlockFace.WEST),
-            new PossibleNeighbour(0, +1, Door.Hinge.LEFT, BlockFace.EAST),
-
-
+            new PossibleNeighbour(0, 1, Door.Hinge.RIGHT, BlockFace.WEST),
             new PossibleNeighbour(0, -1, Door.Hinge.LEFT, BlockFace.WEST),
-            new PossibleNeighbour(0, -1, Door.Hinge.RIGHT, BlockFace.EAST)
-/*            new PossibleNeighbour(-1, 0, Door.Hinge.RIGHT, BlockFace.SOUTH),
-            new PossibleNeighbour(-1, 0, Door.Hinge.LEFT, BlockFace.NORTH),
 
-
-            new PossibleNeighbour(+1, 0, Door.Hinge.LEFT, BlockFace.SOUTH),
-            new PossibleNeighbour(+1, 0, Door.Hinge.RIGHT, BlockFace.NORTH),
-
-
-            new PossibleNeighbour(0, +1, Door.Hinge.RIGHT, BlockFace.WEST),
-            new PossibleNeighbour(0, +1, Door.Hinge.LEFT, BlockFace.EAST),
-
-
-            new PossibleNeighbour(0, -1, Door.Hinge.LEFT, BlockFace.WEST),
-            new PossibleNeighbour(0, -1, Door.Hinge.RIGHT, BlockFace.EAST)*/
+            new PossibleNeighbour(-1,0, Door.Hinge.RIGHT, BlockFace.NORTH),
+            new PossibleNeighbour(1,0, Door.Hinge.LEFT, BlockFace.NORTH)
     };
     private boolean redstoneEnabled = false;
 
@@ -81,37 +63,22 @@ public class Main extends JavaPlugin {
     @Nullable
     public Block getOtherPart(Door door, Block block) {
         for (PossibleNeighbour neighbour : possibleNeighbours) {
-            if (neighbour.getHinge() == door.getHinge()) continue;
+            if(neighbour.getFacing() != door.getFacing()) continue;
+            if (neighbour.getHinge() != door.getHinge()) continue;
             Block relative = block.getRelative(neighbour.getOffsetX(), 0, neighbour.getOffsetZ());
             if (relative.getType() != block.getType()) continue;
             if (!(relative.getBlockData() instanceof Door)) continue;
             Door otherDoor = ((Door) relative.getBlockData());
-            if (otherDoor.getHinge() == neighbour.getHinge() && door.isOpen() == otherDoor.isOpen()) {
-                return relative;
-            }
-        }
-        return null;
-    }
-
-    public @Nullable Block getOtherPart2(Door door, Block block) {
-
-        for (PossibleNeighbour neighbour : possibleNeighbours) {
-
-            if (neighbour.getHinge() == door.getHinge()) continue;
-            Block relative = block.getRelative(neighbour.getOffsetX(), 0, neighbour.getOffsetZ());
-            if (relative.getType() != block.getType()) continue;
-            if (!(relative.getBlockData() instanceof Door)) continue;
-            Door otherDoor = (Door) relative.getBlockData();
-            if (otherDoor.getHinge() != neighbour.getHinge()) continue; // Hinges don't match
-            if (door.isOpen() != ((Door) relative.getBlockData()).isOpen())
-                continue; // One door is open, the other closed
+            if (otherDoor.getHinge() == neighbour.getHinge()) continue;
+            if(door.isOpen() != otherDoor.isOpen()) continue;
+            if(otherDoor.getFacing() != neighbour.getFacing()) continue;
             return relative;
         }
         return null;
     }
 
     private void initUpdateChecker() {
-        UpdateChecker.init(this, "https://api.jeff-media.de/doubledoors/latest-version.txt")
+        UpdateChecker.init(this, "https://api.jeff-media.de/doorsreloaded/latest-version.txt")
                 .setNotifyRequesters(true)
                 .setUserAgent(UserAgentBuilder.getDefaultUserAgent())
                 .setDonationLink("https://paypal.me/mfnalex");
@@ -138,7 +105,7 @@ public class Main extends JavaPlugin {
         reload();
         Bukkit.getPluginManager().registerEvents(new DoorListener(), this);
         initUpdateChecker();
-        getCommand("doubledoors").setExecutor(new ReloadCommand());
+        getCommand("doorsreloaded").setExecutor(new ReloadCommand());
     }
 
     public void reload() {

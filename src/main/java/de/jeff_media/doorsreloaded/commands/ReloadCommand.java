@@ -1,7 +1,7 @@
-package de.jeff_media.doubledoors.commands;
+package de.jeff_media.doorsreloaded.commands;
 
-import de.jeff_media.doubledoors.Main;
-import de.jeff_media.doubledoors.config.Permissions;
+import de.jeff_media.doorsreloaded.Main;
+import de.jeff_media.doorsreloaded.config.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,7 +32,7 @@ public class ReloadCommand implements CommandExecutor {
             }
         }
 
-        sender.sendMessage(ChatColor.GREEN + "DoubleDoors configuration has been reloaded.");
+        sender.sendMessage(ChatColor.GREEN + "DoorsReloaded configuration has been reloaded.");
 
         return true;
     }

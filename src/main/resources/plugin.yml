@@ -10,14 +10,17 @@ authors:
 database: false
 load: POSTWORLD
 commands:
-  doubledoors:
+  doorsreloaded:
     description: Reloads the configuration
-    permission: doubledoors.reload
+    permission: doorsreloaded.reload
     usage: /<command>
 permissions:
-  doubledoors.use:
+  doorsreloaded.use:
     description: Allows to open double doors with one click
     default: true
-  doubledoors.reload:
-    description: Allows to reload the config using /doubledoors
+  doorsreloaded.reload:
+    description: Allows to reload the config using /doorsreloaded
     default: op
+  doorsreloaded.knock:
+    description: Allows to knock on doors using left-click
+    default: true
