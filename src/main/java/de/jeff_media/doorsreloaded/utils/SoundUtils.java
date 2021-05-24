@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 public class SoundUtils {
 
     public static void playKnockSound(Block block) {
+        Main.getInstance().debug("Finally playing sound");
         Main main = Main.getInstance();
         Location location = block.getLocation();
         World world = block.getWorld();
@@ -19,6 +20,12 @@ public class SoundUtils {
         float volume = (float) main.getConfig().getDouble(Config.SOUND_KNOCK_VOLUME);
         float pitch = (float) main.getConfig().getDouble(Config.SOUND_KNOCK_PITCH);
         world.playSound(location,sound, category,volume,pitch);
+        Main.getInstance().debug("World: " + world);
+        Main.getInstance().debug("Location: " + location);
+        Main.getInstance().debug("Sound: " + sound.name());
+        Main.getInstance().debug("Category: " + category.name());
+        Main.getInstance().debug("Volume: " + volume);
+        Main.getInstance().debug("Pitch: " + pitch);
     }
 
 }

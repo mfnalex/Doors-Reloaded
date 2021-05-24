@@ -6,7 +6,8 @@
     <groupId>de.jeff_media</groupId>
     <name>DoorsReloaded</name>
     <artifactId>DoorsReloaded</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.3</version>
+    <description>Auto opens/closes double doors, allows to knock on doors, redstone support, ...</description>
 
     <properties>
         <spigot.website>https://www.spigotmc.org/resources/authors/mfnalex.175238/</spigot.website>
@@ -57,10 +58,6 @@
                         <relocation>
                             <pattern>de.jeff_media.daddy</pattern>
                             <shadedPattern>${project.groupId}.doorsreloaded</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>com.google.gson</pattern>
-                            <shadedPattern>${project.groupId}.doorsreloaded.thirdparty.com.google.gson</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.apache.commons.lang3</pattern>

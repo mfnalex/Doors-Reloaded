@@ -62,6 +62,7 @@ public class Main extends JavaPlugin {
 
     @Nullable
     public Block getOtherPart(Door door, Block block) {
+        if(door == null) return null;
         for (PossibleNeighbour neighbour : possibleNeighbours) {
             if(neighbour.getFacing() != door.getFacing()) continue;
             if (neighbour.getHinge() != door.getHinge()) continue;
