@@ -1,3 +1,6 @@
+## 1.0.4
+- Fixed "Could not check for updates" message being shown to OPs on join when Update Checker is disabled
+
 ## 1.0.3
 - Fixed knocking on doors not working when having "knocking-requires-empty-hand" set to true 
 

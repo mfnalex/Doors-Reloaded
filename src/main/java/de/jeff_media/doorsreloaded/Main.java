@@ -90,6 +90,8 @@ public class Main extends JavaPlugin {
             UpdateChecker.getInstance().checkEveryXHours(getConfig().getDouble(Config.CHECK_FOR_UPDATES_INTERVAL)).checkNow();
         } else if (getConfig().getString(Config.CHECK_FOR_UPDATES).equalsIgnoreCase("on-startup")) {
             UpdateChecker.getInstance().checkNow();
+        } else {
+            UpdateChecker.getInstance().setNotifyOpsOnJoin(false);
         }
     }
 
