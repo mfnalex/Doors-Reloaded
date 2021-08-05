@@ -13,7 +13,6 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.Nullable;
 
 public class Main extends JavaPlugin {
 
@@ -43,7 +42,7 @@ public class Main extends JavaPlugin {
         }
     }
 
-    @Nullable
+
     public Door getBottomDoor(Door door, Block block) {
 
         if (door.getHalf() == Bisected.Half.BOTTOM) {
@@ -60,7 +59,7 @@ public class Main extends JavaPlugin {
         return null; // Door is not matching
     }
 
-    @Nullable
+
     public Block getOtherPart(Door door, Block block) {
         if(door == null) return null;
         for (PossibleNeighbour neighbour : possibleNeighbours) {
@@ -84,7 +83,8 @@ public class Main extends JavaPlugin {
                 .setDownloadLink(91722)
                 .setChangelogLink(91722)
                 .setUserAgent(UserAgentBuilder.getDefaultUserAgent())
-                .setDonationLink("https://paypal.me/mfnalex");
+                .setDonationLink("https://paypal.me/mfnalex")
+                .suppressUpToDateMessage(true);
 
         if (getConfig().getString(Config.CHECK_FOR_UPDATES).equalsIgnoreCase("true")) {
             UpdateChecker.getInstance().checkEveryXHours(getConfig().getDouble(Config.CHECK_FOR_UPDATES_INTERVAL)).checkNow();
