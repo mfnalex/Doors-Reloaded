@@ -78,48 +78,48 @@ public class DoorListener implements Listener {
 
     @EventHandler
     public void onDoorKnock(PlayerInteractEvent event) {
-        main.debug("Door Knock: " + event.getPlayer().getName());
+        //main.debug("Door Knock: " + event.getPlayer().getName());
         Player player = event.getPlayer();
         GameMode gameMode = player.getGameMode();
         if(gameMode == GameMode.CREATIVE || gameMode == GameMode.SPECTATOR) {
-            main.debug("Wrong gamemode");
+            //main.debug("Wrong gamemode");
             return;
         }
         if(!player.hasPermission(Permissions.KNOCK)) {
-            main.debug("No permission");
+            //main.debug("No permission");
             return;
         }
         if(!main.getConfig().getBoolean(Config.ALLOW_KNOCKING)) {
-            main.debug("Disabled in config");
+            //main.debug("Disabled in config");
             return;
         }
         if(event.getAction() != Action.LEFT_CLICK_BLOCK) {
-            main.debug("No left Click Block");
+            //main.debug("No left Click Block");
             return;
         }
         if(event.getHand() != EquipmentSlot.HAND) {
-            main.debug("Wrong slot");
+            //main.debug("Wrong slot");
             return;
         }
         if(main.getConfig().getBoolean(Config.KNOCKING_REQUIRES_SHIFT) && !player.isSneaking()) {
-            main.debug("Not sneaking although it's required");
+            //main.debug("Not sneaking although it's required");
             return;
         }
         if(main.getConfig().getBoolean(Config.KNOCKING_REQUIRES_EMPTY_HAND)) {
             ItemStack itemInHand = player.getInventory().getItemInMainHand();
             if(itemInHand.getType() != Material.AIR) {
-                main.debug("Hand not empty although it's required");
-                main.debug("Item in Hand: " + itemInHand);
+                //main.debug("Hand not empty although it's required");
+                //main.debug("Item in Hand: " + itemInHand);
                 return;
             }
         }
         Block block = event.getClickedBlock();
         if(block == null) {
-            main.debug("Block is null");
+            //main.debug("Block is null");
             return;
         }
         if(!(block.getBlockData() instanceof Door)) {
-            main.debug("This is no door");
+            //main.debug("This is no door");
             return;
         }
         SoundUtils.playKnockSound(block);
