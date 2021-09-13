@@ -20,6 +20,7 @@ public class Config {
     public static final String AUTOCLOSE_DELAY = "autoclose-delay";
     public static final String KNOCKING_REQUIRES_EMPTY_HAND = "knocking-requires-empty-hand";
     public static final String DEBUG = "debug";
+    public static final String ALLOW_DOUBLEDOORS = "allow-doubledoors";
 
     private static Metrics metrics;
 
@@ -29,6 +30,7 @@ public class Config {
         conf.addDefault(CHECK_FOR_UPDATES, "true");
         conf.addDefault(CHECK_FOR_UPDATES_INTERVAL, 4);
         conf.addDefault(CHECK_FOR_REDSTONE, true);
+        conf.addDefault(ALLOW_DOUBLEDOORS, true);
         conf.addDefault(SOUND_KNOCK_IRON, "ENTITY_ZOMBIE_ATTACK_IRON_DOOR");
         conf.addDefault(SOUND_KNOCK_WOOD, "ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR");
         conf.addDefault(SOUND_KNOCK_CATEGORY, "BLOCKS");

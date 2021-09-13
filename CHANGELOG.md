@@ -1,3 +1,6 @@
+## 1.1.2
+- Fixed "allow-doubledoors" not working
+
 ## 1.0.4
 - Fixed "Could not check for updates" message being shown to OPs on join when Update Checker is disabled
 

@@ -57,6 +57,7 @@ public class DoorListener implements Listener {
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
+        if (!main.getConfig().getBoolean(Config.ALLOW_DOUBLEDOORS)) return;
         Block clickedBlock = event.getClickedBlock();
         if (clickedBlock == null) return;
 
