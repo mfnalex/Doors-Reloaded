@@ -6,7 +6,7 @@
     <groupId>de.jeff_media</groupId>
     <name>DoorsReloaded</name>
     <artifactId>DoorsReloaded</artifactId>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <description>Auto opens/closes double doors, allows to knock on doors, redstone support, ...</description>
 
     <properties>
@@ -110,8 +110,8 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>jeff-media-gbr</id>
-            <url>https://repo.jeff-media.de/maven2</url>
+            <id>jeff-media-public</id>
+            <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
         <repository>
             <id>pcgf-repo</id>
@@ -147,7 +147,21 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId><!-- Using spigot instead of spigot-api to access GameProfile class -->
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.18-rc3-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.18-rc3-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>authlib</artifactId>
+            <version>3.2.38</version>
             <scope>provided</scope>
         </dependency>
 
@@ -183,12 +197,5 @@
             <systemPath>${project.basedir}/lib/ExecutableItems.jar</systemPath>
         </dependency>-->
     </dependencies>
-
-    <distributionManagement>
-        <repository>
-            <id>jeff-ftp</id>
-            <url>ftps://ftp.jeff-media.de/maven2</url>
-        </repository>
-    </distributionManagement>
 
 </project>
