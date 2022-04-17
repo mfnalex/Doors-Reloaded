@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Door;
+import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -119,10 +120,16 @@ public class DoorListener implements Listener {
             //main.debug("Block is null");
             return;
         }
-        if(!(block.getBlockData() instanceof Door)) {
+
+        if(block.getBlockData() instanceof Door) {
+            SoundUtils.playKnockSound(block);
             //main.debug("This is no door");
-            return;
         }
-        SoundUtils.playKnockSound(block);
+        else if (block.getBlockData() instanceof TrapDoor && main.getConfig().getBoolean(Config.ALLOW_KNOCKING_TRAPDOORS)) {
+            SoundUtils.playKnockSound(block);
+            //main.debug("This is not trapdoor");
+        }
+
+        return;
     }
 }

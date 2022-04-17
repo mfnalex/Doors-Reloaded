@@ -15,6 +15,9 @@ public class Config {
     public static final String SOUND_KNOCK_PITCH = "sound-knock-pitch";
     public static final String SOUND_KNOCK_CATEGORY = "sound-knock-category";
     public static final String ALLOW_KNOCKING = "allow-knocking";
+
+    public static final String ALLOW_KNOCKING_TRAPDOORS = "allow-knocking-trapdoors";
+
     public static final String ALLOW_AUTOCLOSE = "allow-autoclose";
     public static final String KNOCKING_REQUIRES_SHIFT = "knocking-requires-shift";
     public static final String AUTOCLOSE_DELAY = "autoclose-delay";
@@ -37,6 +40,7 @@ public class Config {
         conf.addDefault(SOUND_KNOCK_VOLUME, 1.0);
         conf.addDefault(SOUND_KNOCK_PITCH, 1.0);
         conf.addDefault(ALLOW_KNOCKING, true);
+        conf.addDefault(ALLOW_KNOCKING_TRAPDOORS, false);
         conf.addDefault(KNOCKING_REQUIRES_EMPTY_HAND, false);
         conf.addDefault(ALLOW_AUTOCLOSE, false);
         conf.addDefault(KNOCKING_REQUIRES_SHIFT, false);
