@@ -58,7 +58,7 @@ sound-knock-category: BLOCKS
 # When set to false, don't check for updates
 check-for-updates: true
 
-# When check-for-updates is true, AngelChest will check every X hours
+# When check-for-updates is true, Doors Reloaded will check every X hours
 check-interval: 4
 
 # Debug mode
