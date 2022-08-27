@@ -1,5 +1,6 @@
 package de.jeff_media.doorsreloaded;
 
+import de.jeff_media.configupdater.ConfigUpdater;
 import de.jeff_media.doorsreloaded.commands.ReloadCommand;
 import de.jeff_media.doorsreloaded.config.Config;
 import de.jeff_media.doorsreloaded.data.PossibleNeighbour;
@@ -10,9 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.IOException;
 
 public class Main extends JavaPlugin {
 
@@ -115,16 +119,26 @@ public class Main extends JavaPlugin {
 
     public void reload() {
         saveDefaultConfig();
+        try {
+            new ConfigUpdater(this,"config.yml","configupdate.yml").update();
+        } catch (IOException e) {
+            getLogger().severe("Could not update config.yml:");
+            e.printStackTrace();
+        }
         reloadConfig();
         redstoneEnabled = getConfig().getBoolean(Config.CHECK_FOR_REDSTONE);
     }
 
-    private void toggleDoor(Block otherDoorBlock, Door otherDoor, boolean open) {
+    private void toggleDoor(Block otherDoorBlock, Openable otherDoor, boolean open) {
         otherDoor.setOpen(open);
         otherDoorBlock.setBlockData(otherDoor);
     }
 
     public void toggleOtherDoor(Block block, Block otherBlock, boolean open, boolean causedByRedstone) {
+        toggleOtherDoor(block, otherBlock, open, causedByRedstone, false);
+    }
+
+    public void toggleOtherDoor(Block block, Block otherBlock, boolean open, boolean causedByRedstone, boolean force) {
 
         if (!(block.getBlockData() instanceof Door)) return;
         if (!(otherBlock.getBlockData() instanceof Door)) return;
@@ -143,7 +157,7 @@ public class Main extends JavaPlugin {
                 public void run() {
                 if (!(otherBlock.getBlockData() instanceof Door)) return;
                 Door newDoor = (Door) block.getBlockData();
-                if (newDoor.isOpen() == openNow) {
+                if (!force && newDoor.isOpen() == openNow) {
                     return;
                 }
                 toggleDoor(otherBlock, otherDoor, open);

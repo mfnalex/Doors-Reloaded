@@ -24,3 +24,6 @@ permissions:
   doorsreloaded.knock:
     description: Allows to knock on doors using left-click
     default: true
+  doorsreloaded.irondoors:
+    description: Allows to open iron doors using right-click
+    default: op

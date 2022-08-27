@@ -21,6 +21,7 @@ public class Config {
     public static final String KNOCKING_REQUIRES_EMPTY_HAND = "knocking-requires-empty-hand";
     public static final String DEBUG = "debug";
     public static final String ALLOW_DOUBLEDOORS = "allow-doubledoors";
+    public static final String ALLOW_IRONDOORS = "allow-opening-irondoors-with-hands";
 
     private static Metrics metrics;
 

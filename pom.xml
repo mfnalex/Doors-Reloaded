@@ -6,7 +6,7 @@
     <groupId>de.jeff_media</groupId>
     <name>DoorsReloaded</name>
     <artifactId>DoorsReloaded</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.1</version>
     <description>Auto opens/closes double doors, allows to knock on doors, redstone support, ...</description>
 
     <properties>
@@ -50,6 +50,10 @@
                         <relocation>
                             <pattern>org.bstats.bukkit</pattern>
                             <shadedPattern>${project.groupId}.doorsreloaded</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>de.jeff_media.configupdater</pattern>
+                            <shadedPattern>de.jeff_media.doorsreloaded.configupdater</shadedPattern>
                         </relocation>
                     </relocations>
                     <artifactSet>
@@ -149,6 +153,13 @@
             <artifactId>spigot</artifactId><!-- Using spigot instead of spigot-api to access GameProfile class -->
             <version>1.18-rc3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>ConfigUpdater</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

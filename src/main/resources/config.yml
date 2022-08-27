@@ -17,6 +17,17 @@ allow-doubledoors: true
 check-for-redstone: true
 
 ###########################
+#        Iron Doors       #
+###########################
+
+# When true, players can open-close iron doors and iron trapdoors with right-click.
+# They need the permission "doorsreloaded.irondoors".
+allow-opening-irondoors-with-hands: false
+
+# Time to autoclose iron doors/trapdoors in seconds
+autoclose: 5
+
+###########################
 #         Knocking        #
 ###########################
 

@@ -4,10 +4,13 @@ import de.jeff_media.doorsreloaded.Main;
 import de.jeff_media.doorsreloaded.config.Config;
 import de.jeff_media.doorsreloaded.config.Permissions;
 import de.jeff_media.doorsreloaded.utils.SoundUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -20,12 +23,43 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class DoorListener implements Listener {
 
-    private final Main main;
+    private final HashMap<Block,Long> autoClose = new HashMap<>();
 
-    public DoorListener() {
-        main = Main.getInstance();
+    private final Main main = Main.getInstance();
+
+    {
+        Bukkit.getScheduler().runTaskTimer(main, () -> {
+            Iterator<Map.Entry<Block,Long>> it = autoClose.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry<Block,Long> entry = it.next();
+                Block block = entry.getKey();
+                Long time = entry.getValue();
+                if(System.currentTimeMillis() < time) continue;
+                if(block.getBlockData() instanceof Openable) {
+                    Openable openable = (Openable) block.getBlockData();
+                    if(openable.isOpen()) {
+                        if(openable instanceof Door) {
+                            Block otherDoor = main.getOtherPart((Door) openable, block);
+                            if(otherDoor != null) {
+                                main.toggleOtherDoor(block, otherDoor, false, false);
+                            } else {
+                                //System.out.println("other door is null");
+                            }
+                        }
+                        openable.setOpen(false);
+                        block.setBlockData(openable);
+                        block.getWorld().playEffect(block.getLocation(),Effect.IRON_DOOR_CLOSE, 0);
+                    }
+                }
+                it.remove();
+            }
+        },1,1);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -50,25 +84,58 @@ public class DoorListener implements Listener {
         main.toggleOtherDoor(block, otherDoorBlock, event.getNewCurrent() > 0, true);
     }
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onIronDoor(PlayerInteractEvent event) {
+        if(event.getHand() != EquipmentSlot.HAND) return;
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        Block block = event.getClickedBlock();
+        if(block.getType() != Material.IRON_DOOR && block.getType() != Material.IRON_TRAPDOOR) return;
+        if(!main.getConfig().getBoolean(Config.ALLOW_IRONDOORS)) return;
+        if(!event.getPlayer().hasPermission(Permissions.IRONDOORS)) return;
+        block.getWorld().playEffect(block.getLocation(), Effect.IRON_DOOR_TOGGLE, 0);
+        Openable door = (Openable) block.getBlockData();
+        door.setOpen(!door.isOpen());
+        onRightClickDoor(event);
+        block.setBlockData(door);
+        autoClose.put(block,System.currentTimeMillis() + (main.getConfig().getLong("autoclose")*1000));
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onRightClickDoor(PlayerInteractEvent event) {
 
-        if(!event.getPlayer().hasPermission(Permissions.USE)) return;
-        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        if (event.getHand() != EquipmentSlot.HAND) return;
-        if (!main.getConfig().getBoolean(Config.ALLOW_DOUBLEDOORS)) return;
+        if (event.getHand() != EquipmentSlot.HAND) {
+            return;
+        }
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) {
+            //System.out.println("not allowed");
+            return;
+        }
+        if(!event.getPlayer().hasPermission(Permissions.USE)) {
+            return;
+        }
+        if (!main.getConfig().getBoolean(Config.ALLOW_DOUBLEDOORS)) {
+            return;
+        }
         Block clickedBlock = event.getClickedBlock();
-        if (clickedBlock == null) return;
+        if (clickedBlock == null) {
+            return;
+        }
 
         //Material type = clickedBlock.getType();
         BlockData blockData = clickedBlock.getBlockData();
-        if (!(blockData instanceof Door)) return;
+        if (!(blockData instanceof Door)) {
+            //System.out.println("not a door");
+            return;
+        }
         Door door = main.getBottomDoor((Door) blockData, clickedBlock);
 
         Block otherDoorBlock = main.getOtherPart(door, clickedBlock);
 
         if (otherDoorBlock == null) {
+            //System.out.println("other door is null");
             return;
         }
 
