@@ -36,6 +36,11 @@ autoclose: 5
 # They need the permission "doorsreloaded.knock" which is given to all players by default
 allow-knocking: true
 
+# When true, players can knock to trapdoors like normal doors.
+# Players still need the permission "doorsreloaded.knock" which is given to all players by default
+# If allow-knocking is false, this feature won't work
+allow-knocking-trapdoors: false
+
 # When true, players can only knock when their hand is empty.
 knocking-requires-empty-hand: false
 
@@ -64,7 +69,7 @@ sound-knock-category: BLOCKS
 # When set to false, don't check for updates
 check-for-updates: true
 
-# When check-for-updates is true, AngelChest will check every X hours
+# When check-for-updates is true, Doors Reloaded will check every X hours
 check-interval: 4
 
 # Debug mode
