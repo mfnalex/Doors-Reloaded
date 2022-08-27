@@ -89,6 +89,7 @@ public class DoorListener implements Listener {
     public void onIronDoor(PlayerInteractEvent event) {
         if(event.getHand() != EquipmentSlot.HAND) return;
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if(event.getPlayer().isSneaking() && event.hasItem()) return; // Vanilla doors do not open if sneaking while holding an item
         Block block = event.getClickedBlock();
         if(block.getType() != Material.IRON_DOOR && block.getType() != Material.IRON_TRAPDOOR) return;
         if(!main.getConfig().getBoolean(Config.ALLOW_IRONDOORS)) return;
@@ -98,6 +99,8 @@ public class DoorListener implements Listener {
         door.setOpen(!door.isOpen());
         onRightClickDoor(event);
         block.setBlockData(door);
+
+        if (!main.getConfig().getBoolean(Config.ALLOW_AUTOCLOSE)) return;
         autoClose.put(block,System.currentTimeMillis() + (main.getConfig().getLong("autoclose")*1000));
     }
 

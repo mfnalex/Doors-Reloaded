@@ -24,6 +24,10 @@ check-for-redstone: true
 # They need the permission "doorsreloaded.irondoors".
 allow-opening-irondoors-with-hands: false
 
+# When true, iron doors/trapdoors will be automatically closed when they are opened with right-click.
+# The amount of time before they close can be configured below.
+allow-autoclose: false
+
 # Time to autoclose iron doors/trapdoors in seconds
 autoclose: 5
 
