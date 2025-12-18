@@ -3,6 +3,7 @@
 ###########################
 
 # written by mfnalex / JEFF Media GbR
+# updated to 1.21.x by ShermansWorld
 
 ###########################
 #       Double doors      #
@@ -23,9 +24,6 @@ check-for-redstone: true
 # When true, players can open-close iron doors and iron trapdoors with right-click.
 # They need the permission "doorsreloaded.irondoors".
 allow-opening-irondoors-with-hands: false
-
-# Time to autoclose iron doors/trapdoors in seconds
-autoclose: 5
 
 ###########################
 #         Knocking        #
@@ -49,8 +47,8 @@ knocking-requires-shift: false
 
 # Settings for the knocking sound
 # See here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
-sound-knock-iron: ENTITY_ZOMBIE_ATTACK_IRON_DOOR
-sound-knock-wood: ITEM_SHIELD_BLOCK
+sound-knock-iron: "minecraft:entity.zombie.attack_iron_door"
+sound-knock-wood: "minecraft:item.shield.block"
 # A volume of 1.0 means 16 blocks, 2.0 means 32 blocks, etc.
 sound-knock-volume: 1.0
 sound-knock-pitch: 1.0
@@ -61,20 +59,5 @@ sound-knock-category: BLOCKS
 #           Misc          #
 ###########################
 
-# Should we check for updates?
-# When enabled, a message is printed in the console if a new version has
-# been found, and OPs will be notified when they join the server.
-# When set to true, we will check for updates on startup and every X hours
-# When set to on-startup, we will only check on startup
-# When set to false, don't check for updates
-check-for-updates: true
-
-# When check-for-updates is true, Doors Reloaded will check every X hours
-check-interval: 4
-
 # Debug mode
 debug: false
-
-# NEVER CHANGE THE VALUES BELOW!
-plugin-version: ${project.version}
-config-version: ${config.version}

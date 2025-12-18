@@ -1,12 +1,9 @@
 package de.jeff_media.doorsreloaded;
 
-import de.jeff_media.configupdater.ConfigUpdater;
 import de.jeff_media.doorsreloaded.commands.ReloadCommand;
 import de.jeff_media.doorsreloaded.config.Config;
 import de.jeff_media.doorsreloaded.data.PossibleNeighbour;
 import de.jeff_media.doorsreloaded.listeners.DoorListener;
-import de.jeff_media.updatechecker.UpdateChecker;
-import de.jeff_media.updatechecker.UserAgentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -81,24 +78,6 @@ public class Main extends JavaPlugin {
         return null;
     }
 
-    private void initUpdateChecker() {
-        UpdateChecker.init(this, "https://api.jeff-media.de/doorsreloaded/latest-version.txt")
-                .setNotifyRequesters(true)
-                .setDownloadLink(91722)
-                .setChangelogLink(91722)
-                .setUserAgent(UserAgentBuilder.getDefaultUserAgent())
-                .setDonationLink("https://paypal.me/mfnalex")
-                .suppressUpToDateMessage(true);
-
-        if (getConfig().getString(Config.CHECK_FOR_UPDATES).equalsIgnoreCase("true")) {
-            UpdateChecker.getInstance().checkEveryXHours(getConfig().getDouble(Config.CHECK_FOR_UPDATES_INTERVAL)).checkNow();
-        } else if (getConfig().getString(Config.CHECK_FOR_UPDATES).equalsIgnoreCase("on-startup")) {
-            UpdateChecker.getInstance().checkNow();
-        } else {
-            UpdateChecker.getInstance().setNotifyOpsOnJoin(false);
-        }
-    }
-
     public boolean isDebug() {
         return getConfig().getBoolean(Config.DEBUG);
     }
@@ -113,18 +92,11 @@ public class Main extends JavaPlugin {
         Config.init();
         reload();
         Bukkit.getPluginManager().registerEvents(new DoorListener(), this);
-        initUpdateChecker();
         getCommand("doorsreloaded").setExecutor(new ReloadCommand());
     }
 
     public void reload() {
         saveDefaultConfig();
-        try {
-            new ConfigUpdater(this,"config.yml","configupdate.yml").update();
-        } catch (IOException e) {
-            getLogger().severe("Could not update config.yml:");
-            e.printStackTrace();
-        }
         reloadConfig();
         redstoneEnabled = getConfig().getBoolean(Config.CHECK_FOR_REDSTONE);
     }

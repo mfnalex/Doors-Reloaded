@@ -1,5 +1,4 @@
 package de.jeff_media.doorsreloaded.utils;
-
 import com.google.common.base.Enums;
 import de.jeff_media.doorsreloaded.Main;
 import de.jeff_media.doorsreloaded.config.Config;
@@ -13,16 +12,23 @@ public class SoundUtils {
         Main main = Main.getInstance();
         Location location = block.getLocation();
         World world = block.getWorld();
-        Sound sound = block.getType() == Material.IRON_DOOR
-                ? Enums.getIfPresent(Sound.class, main.getConfig().getString(Config.SOUND_KNOCK_IRON)).or(Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR)
-                : Enums.getIfPresent(Sound.class, main.getConfig().getString(Config.SOUND_KNOCK_WOOD)).or(Sound.ITEM_SHIELD_BLOCK);
-        SoundCategory category = Enums.getIfPresent(SoundCategory.class,main.getConfig().getString(Config.SOUND_KNOCK_CATEGORY)).or(SoundCategory.BLOCKS);
+        String soundID;
+        if (block.getType().equals(Material.IRON_DOOR)) {
+            soundID = main.getConfig().getString(Config.SOUND_KNOCK_IRON);
+            if (soundID == null || soundID.isEmpty()) soundID = "minecraft:item.shield.block";
+        } else {
+            soundID = main.getConfig().getString(Config.SOUND_KNOCK_WOOD);
+            if (soundID == null || soundID.isEmpty()) soundID = "minecraft:entity.zombie.attack_iron_door";
+        }
         float volume = (float) main.getConfig().getDouble(Config.SOUND_KNOCK_VOLUME);
         float pitch = (float) main.getConfig().getDouble(Config.SOUND_KNOCK_PITCH);
-        world.playSound(location,sound, category,volume,pitch);
+        SoundCategory category = Enums.getIfPresent(SoundCategory.class,main.getConfig().getString(Config.SOUND_KNOCK_CATEGORY)).or(SoundCategory.BLOCKS);
+        NamespacedKey soundKey = NamespacedKey.fromString(soundID) != null ? NamespacedKey.fromString(soundID) : NamespacedKey.fromString("minecraft:item.shield.block");
+        Sound sound = Registry.SOUNDS.get(soundKey);
+        world.playSound(location, sound, category,volume,pitch);
         Main.getInstance().debug("World: " + world);
         Main.getInstance().debug("Location: " + location);
-        Main.getInstance().debug("Sound: " + sound.name());
+        Main.getInstance().debug("Sound: " + soundID);
         Main.getInstance().debug("Category: " + category.name());
         Main.getInstance().debug("Volume: " + volume);
         Main.getInstance().debug("Pitch: " + pitch);
